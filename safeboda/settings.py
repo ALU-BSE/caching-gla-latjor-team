@@ -75,6 +75,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'safeboda.wsgi.application'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'users': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -85,6 +105,24 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'SOCKET_CONNECT_TIMEOUT': 5,  # in seconds
+            'SOCKET_TIMEOUT': 5,  # in seconds
+        },
+        'KEY_PREFIX': 'safeboda',
+        'TIMEOUT': 60 * 60,  # 1 hour default timeout
+    }
+}
+
+#cache TTL  for the custom caching
+
+CACHE_TTL = 60 * 60  # 1 hour
 
 
 # Password validation
