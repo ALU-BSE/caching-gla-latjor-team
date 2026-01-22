@@ -1,12 +1,14 @@
-```markdown
-[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=22308293)
 # SafeBoda - Caching Implementation
+
+[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=22308293)
 
 A Django-based ride-sharing platform similar to SafeBoda, now enhanced with Redis caching for improved performance.
 
 ## 🚀 New Feature: Redis Caching System
 
 We have successfully implemented a comprehensive Redis-based caching system that significantly improves API response times and reduces database load.
+
+---
 
 ## Features
 
@@ -24,36 +26,41 @@ We have successfully implemented a comprehensive Redis-based caching system that
 - **Performance Monitoring**: Cache hit/miss tracking and statistics endpoint
 - **Scalable Architecture**: Ready for production deployment
 
+---
+
 ## 📊 Caching Implementation Summary
 
 ### What We Implemented
 
-#### 1. **Redis Setup & Configuration**
+#### 1. Redis Setup & Configuration
 - Installed Redis cache server
 - Configured Django to use Redis as cache backend
 - Set up connection pooling and timeout settings
 - Configured cache key prefixes for namespacing
 
-#### 2. **View-Level Caching**
+#### 2. View-Level Caching
 - **User List Caching**: `/api/users/` endpoint responses cached for 1 hour
 - **User Detail Caching**: `/api/users/{id}/` individual user responses cached
 - **Smart Cache Keys**: Consistent key generation using `get_cache_key()` helper
 
-#### 3. **Cache Invalidation Strategy**
+#### 3. Cache Invalidation Strategy
 - Automatic cache clearing when users are created
 - Cache invalidation on user updates
 - Cache removal when users are deleted
 - Signal-based invalidation ready for extension
 
-#### 4. **Monitoring & Utilities**
+#### 4. Monitoring & Utilities
 - Cache statistics endpoint: `/api/cache-stats/`
 - Performance logging for cache hits and misses
 - Redis connection health checks
 - Cache warming capabilities
 
+---
+
 ## 🧪 Testing Results
 
 ### Cache Performance Tests
+
 ```
 TESTING CACHING WITH LARGER DATASET
 ==================================================
@@ -77,6 +84,7 @@ TESTING CACHING WITH LARGER DATASET
 ```
 
 ### Redis Verification
+
 ```bash
 $ redis-cli
 127.0.0.1:6379> SELECT 1
@@ -84,6 +92,8 @@ OK
 127.0.0.1:6379[1]> keys *
 1) "safeboda:1:user_list_response"
 ```
+
+---
 
 ## 📚 What We Learned
 
@@ -101,6 +111,8 @@ OK
 3. **Permission Conflicts**: Temporarily relaxed permissions for testing, with production-ready patterns
 4. **Logging Setup**: Configured proper logging to monitor cache operations
 
+---
+
 ## 🛠️ Updated Requirements
 
 The project now uses the following Python packages:
@@ -115,22 +127,24 @@ django-redis==5.4.0
 djangorestframework==3.15.2
 ```
 
+---
+
 ## 🚀 Installation (Updated)
 
 ### Step 1: Install Redis
 
-**For Windows (using Docker - recommended):**
+#### For Windows (using Docker - recommended):
 ```bash
 docker run -d --name redis-cache -p 6379:6379 redis:alpine
 ```
 
-**For macOS:**
+#### For macOS:
 ```bash
 brew install redis
 brew services start redis
 ```
 
-**For Ubuntu/Debian:**
+#### For Ubuntu/Debian:
 ```bash
 sudo apt update
 sudo apt install redis-server
@@ -140,52 +154,54 @@ sudo systemctl enable redis-server
 
 ### Step 2: Project Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd safeboda
-   ```
+**1. Clone the repository**
+```bash
+git clone <repository-url>
+cd safeboda
+```
 
-2. **Create a virtual environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+**2. Create a virtual environment**
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+**3. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-4. **Environment Configuration**
-   
-   Copy the `.env` file and update the values:
-   ```bash
-   cp .env.example .env
-   ```
-   
-   **Important**: Ensure your `.env` file has:
-   ```
-   DJANGO_SECRET_KEY=your_actual_secret_key_here
-   DEBUG=True
-   ALLOWED_HOSTS=localhost,127.0.0.1
-   ```
+**4. Environment Configuration**
 
-5. **Database Setup**
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+Copy the `.env` file and update the values:
+```bash
+cp .env.example .env
+```
 
-6. **Create a Superuser**
-   ```bash
-   python manage.py createsuperuser
-   ```
+**Important**: Ensure your `.env` file has:
+```env
+DJANGO_SECRET_KEY=your_actual_secret_key_here
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+```
 
-7. **Run the Development Server**
-   ```bash
-   python manage.py runserver
-   ```
+**5. Database Setup**
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+**6. Create a Superuser**
+```bash
+python manage.py createsuperuser
+```
+
+**7. Run the Development Server**
+```bash
+python manage.py runserver
+```
+
+---
 
 ## 🎯 Usage
 
@@ -198,34 +214,38 @@ sudo systemctl enable redis-server
 
 ### Testing the Cache System
 
-1. **Verify Redis is running:**
-   ```bash
-   redis-cli ping
-   # Should return: PONG
-   ```
+**1. Verify Redis is running:**
+```bash
+redis-cli ping
+# Should return: PONG
+```
 
-2. **Test basic cache functionality:**
-   ```bash
-   python manage.py shell
-   >>> from django.core.cache import cache
-   >>> cache.set('test', 'hello', 30)
-   >>> cache.get('test')
-   'hello'
-   ```
+**2. Test basic cache functionality:**
+```bash
+python manage.py shell
+```
+```python
+>>> from django.core.cache import cache
+>>> cache.set('test', 'hello', 30)
+>>> cache.get('test')
+'hello'
+```
 
-3. **Test API caching:**
-   - First visit to `/api/users/` → Cache MISS (slower)
-   - Refresh the page → Cache HIT (faster)
-   - Create a new user → Cache automatically cleared
-   - Visit again → Cache MISS (fresh data)
+**3. Test API caching:**
+- First visit to `/api/users/` → Cache MISS (slower)
+- Refresh the page → Cache HIT (faster)
+- Create a new user → Cache automatically cleared
+- Visit again → Cache MISS (fresh data)
 
-4. **Check Redis cache contents:**
-   ```bash
-   redis-cli
-   SELECT 1
-   keys *
-   get "safeboda:1:user_list_response"
-   ```
+**4. Check Redis cache contents:**
+```bash
+redis-cli
+SELECT 1
+keys *
+get "safeboda:1:user_list_response"
+```
+
+---
 
 ## 📁 Updated Project Structure
 
@@ -254,6 +274,8 @@ safeboda/
         ├── __init__.py
         └── 0001_initial.py
 ```
+
+---
 
 ## ⚙️ Configuration
 
@@ -287,6 +309,8 @@ CACHES = {
 CACHE_TTL = 60 * 60  # 1 hour
 ```
 
+---
+
 ## 🔧 Development
 
 ### Testing Caching
@@ -312,44 +336,48 @@ python test_cache_invalidation.py
 
 ### Making Database Changes
 
-1. After modifying models:
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+**1. After modifying models:**
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
-2. Clear cache if needed:
-   ```bash
-   redis-cli
-   SELECT 1
-   FLUSHDB
-   ```
+**2. Clear cache if needed:**
+```bash
+redis-cli
+SELECT 1
+FLUSHDB
+```
+
+---
 
 ## 🚨 Troubleshooting
 
 ### Common Issues
 
-1. **Redis connection refused**
-   ```bash
-   # Start Redis if using Docker
-   docker start redis-cache
-   
-   # Or check if Redis is running
-   redis-cli ping
-   ```
+#### 1. Redis connection refused
+```bash
+# Start Redis if using Docker
+docker start redis-cache
 
-2. **Cache not working**
-   - Check `CACHES` (not `CACHE`) in settings.py
-   - Verify Redis is on database 1: `SELECT 1`
-   - Check permissions in `UserViewSet.get_permissions()`
+# Or check if Redis is running
+redis-cli ping
+```
 
-3. **500 Internal Server Error**
-   - Ensure `.env` file has `DJANGO_SECRET_KEY`
-   - Check `ALLOWED_HOSTS` includes `localhost,127.0.0.1`
+#### 2. Cache not working
+- Check `CACHES` (not `CACHE`) in settings.py
+- Verify Redis is on database 1: `SELECT 1`
+- Check permissions in `UserViewSet.get_permissions()`
 
-4. **Cache not invalidating**
-   - Verify `perform_create`, `perform_update`, `perform_destroy` methods in `UserViewSet`
-   - Check cache keys match in set/delete operations
+#### 3. 500 Internal Server Error
+- Ensure `.env` file has `DJANGO_SECRET_KEY`
+- Check `ALLOWED_HOSTS` includes `localhost,127.0.0.1`
+
+#### 4. Cache not invalidating
+- Verify `perform_create`, `perform_update`, `perform_destroy` methods in `UserViewSet`
+- Check cache keys match in set/delete operations
+
+---
 
 ## 📈 Performance Considerations
 
@@ -362,6 +390,8 @@ python test_cache_invalidation.py
 - Adjust `CACHE_TTL` in `settings.py` based on data volatility
 - Consider different timeouts for different data types
 - Implement cache warming for critical paths
+
+---
 
 ## 🤝 Contributing
 
@@ -377,19 +407,25 @@ python test_cache_invalidation.py
 - Add logging for cache operations
 - Include cache performance tests
 
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+---
+
 ## 🆘 Support
 
-For caching-related issues:
+### For caching-related issues:
 1. Check Redis is running: `redis-cli ping`
 2. Verify cache configuration in `settings.py`
 3. Check Django logs for cache errors
 4. Use provided test scripts to validate cache functionality
 
 For general support or questions, please contact the development team or create an issue in the repository.
+
+---
 
 ## 🎓 Learning Resources
 
@@ -404,15 +440,3 @@ For general support or questions, please contact the development team or create 
 **Caching System**: Redis + Django Redis  
 **Performance Improvement**: Ready for production scaling  
 **Status**: ✅ Fully Implemented and Tested
-```
-
-This README now includes:
-1. **Complete caching implementation details**
-2. **Testing results and outputs**
-3. **Lessons learned** from the implementation
-4. **Updated installation instructions** with Redis setup
-5. **Troubleshooting guide** for common issues
-6. **Performance considerations**
-7. **Clear usage instructions** for testing the cache
-
-The documentation covers everything from setup to advanced testing, making it easy for anyone to understand and work with the caching system we implemented.
